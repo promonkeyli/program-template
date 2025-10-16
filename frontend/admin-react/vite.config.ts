@@ -15,6 +15,7 @@ export default defineConfig({
 		tanstackRouter({
 			target: "react",
 			autoCodeSplitting: true,
+			generatedRouteTree: "./src/routes/routeTree.gen.ts", // 手动指定routeTree.gen.ts 生成的位置
 		}),
 		react({
 			babel: {

@@ -1,7 +1,7 @@
 #   Refer for explanation to following link:
 #   https://lefthook.dev/configuration/
 
-# Pre-commit Biome check
+# Pre-commit biome check
 pre-commit:
   commands:
     check:
