@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "@/assets/styles/index.css";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { routeTree } from "@/routes/routeTree.gen";
+import { routeTree } from "@/router.ts";
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -10,6 +10,7 @@ declare module "@tanstack/react-router" {
 		router: typeof router;
 	}
 }
+
 // Create a new router instance
 const router = createRouter({ routeTree });
 
