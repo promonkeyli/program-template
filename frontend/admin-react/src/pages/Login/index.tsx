@@ -1,58 +1,32 @@
 import { useState } from 'react'
-import { useNavigate } from '@tanstack/react-router'
 import { Eye, EyeOff, Lock, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { useAuthStore } from '@/stores/auth'
+import { Checkbox } from '@/components/ui/checkbox'
+import { useLogin } from './store'
 
 export default function Login() {
-  const navigate = useNavigate()
-  const { setToken, setUserInfo } = useAuthStore()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    username: '',
-    password: ''
+    username: 'admin',
+    password: '123456'
   })
-  const [isLoading, setIsLoading] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  
+  const loginMutation = useLogin()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
+    setError(null)
     
-    // 模拟登录请求
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log('登录数据:', formData)
-      
-      // 模拟登录成功，设置 token 和用户信息
-      const mockToken = {
-        accessToken: 'mock-access-token-' + Date.now(),
-        refreshToken: 'mock-refresh-token-' + Date.now(),
-        expiresIn: 3600,
-        tokenType: 'Bearer'
+    loginMutation.mutate(formData, {
+      onError: (error) => {
+        setError(error.message)
       }
-      
-      const mockUserInfo = {
-        id: '1',
-        username: formData.username,
-        nickname: formData.username,
-        roles: ['user'],
-        permissions: ['read', 'write']
-      }
-      
-      // 更新 auth store
-      setToken(mockToken)
-      setUserInfo(mockUserInfo)
-      
-      // 登录成功后重定向到首页
-      navigate({ to: '/' })
-    } catch (error) {
-      console.error('登录失败:', error)
-    } finally {
-      setIsLoading(false)
-    }
+    })
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +60,7 @@ export default function Login() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* 用户名输入 */}
-              <div className="space-y-2">
+              <div className="flex flex-col gap-3">
                 <Label htmlFor="username">用户名</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -104,7 +78,7 @@ export default function Login() {
               </div>
 
               {/* 密码输入 */}
-              <div className="space-y-2">
+              <div className="flex flex-col gap-3">
                 <Label htmlFor="password">密码</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -134,28 +108,42 @@ export default function Login() {
 
               {/* 记住我和忘记密码 */}
               <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="rounded border-input"
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="remember"
+                    checked={rememberMe}
+                    onCheckedChange={(checked) => setRememberMe(!!checked)}
                   />
-                  <span className="text-muted-foreground">记住我</span>
-                </label>
-                <button
+                  <Label
+                    htmlFor="remember"
+                    className="text-muted-foreground cursor-pointer"
+                  >
+                    记住我
+                  </Label>
+                </div>
+                <Button
                   type="button"
-                  className="text-primary hover:text-primary/80 transition-colors"
+                  variant="link"
+                  className="text-primary hover:text-primary/80 p-0 h-auto text-sm"
                 >
                   忘记密码？
-                </button>
+                </Button>
               </div>
+
+              {/* 错误信息显示 */}
+              {error && (
+                <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 dark:text-red-400 rounded-md border border-red-200 dark:border-red-800">
+                  {error}
+                </div>
+              )}
 
               {/* 登录按钮 */}
               <Button
                 type="submit"
                 className="w-full h-11 text-base font-medium"
-                disabled={isLoading}
+                disabled={loginMutation.isPending}
               >
-                {isLoading ? (
+                {loginMutation.isPending ? (
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                     <span>登录中...</span>
@@ -210,9 +198,13 @@ export default function Login() {
         {/* 底部链接 */}
         <div className="text-center mt-6 text-sm text-muted-foreground">
           还没有账户？{' '}
-          <button className="text-primary hover:text-primary/80 transition-colors font-medium">
+          <Button
+            type="button"
+            variant="link"
+            className="text-primary hover:text-primary/80 p-0 h-auto text-sm font-medium"
+          >
             立即注册
-          </button>
+          </Button>
         </div>
       </div>
     </div>
