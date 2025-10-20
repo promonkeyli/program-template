@@ -136,21 +136,51 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* 菜单项 */}
       <nav className="flex-1 p-4 space-y-2">
         {menuItems.map((item) => (
-          <Button
-            key={item.id}
-            variant={isActive(item.path) ? "secondary" : "ghost"}
-            className={cn(
-              "w-full justify-start h-10",
-              collapsed ? "px-2" : "px-3",
-              isActive(item.path) && "bg-secondary text-secondary-foreground"
+          <div key={item.id}>
+            <Button
+              variant={isActive(item.path) ? "secondary" : "ghost"}
+              className={cn(
+                "w-full justify-start h-10",
+                collapsed ? "px-2" : "px-3",
+                isActive(item.path) && "bg-secondary text-secondary-foreground"
+              )}
+              onClick={() => handleMenuClick(item)}
+            >
+              <item.icon className={cn("h-4 w-4", !collapsed && "mr-3")} />
+              {!collapsed && (
+                <span className="flex-1 text-left">{item.label}</span>
+              )}
+              {!collapsed && item.children && (
+                <ChevronRight 
+                  className={cn(
+                    "h-4 w-4 transition-transform",
+                    isExpanded(item.id) && "rotate-90"
+                  )} 
+                />
+              )}
+            </Button>
+
+            {/* 子菜单 */}
+            {!collapsed && item.children && isExpanded(item.id) && (
+              <div className="ml-6 mt-2 space-y-1">
+                {item.children.map((child) => (
+                  <Button
+                    key={child.id}
+                    variant={isActive(child.path) ? "secondary" : "ghost"}
+                    size="sm"
+                    className={cn(
+                      "w-full justify-start h-8 text-sm",
+                      isActive(child.path) && "bg-secondary text-secondary-foreground"
+                    )}
+                    onClick={() => navigate({ to: child.path })}
+                  >
+                    <child.icon className="h-3 w-3 mr-2" />
+                    {child.label}
+                  </Button>
+                ))}
+              </div>
             )}
-            onClick={() => handleMenuClick(item)}
-          >
-            <item.icon className={cn("h-4 w-4", !collapsed && "mr-3")} />
-            {!collapsed && (
-              <span className="flex-1 text-left">{item.label}</span>
-            )}
-          </Button>
+          </div>
         ))}
       </nav>
 
