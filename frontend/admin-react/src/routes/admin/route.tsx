@@ -4,7 +4,7 @@ import { Breadcrumb } from "@/components/Layout/Breadcrumb.tsx";
 import { Header } from "@/components/Layout/Header.tsx";
 import { Sidebar } from "@/components/Layout/Sidebar.tsx";
 
-export const Route = createFileRoute("/admin/")({
+export const Route = createFileRoute("/admin")({
 	component: RouteComponent,
 });
 
