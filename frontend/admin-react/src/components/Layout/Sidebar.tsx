@@ -31,43 +31,43 @@ const menuItems: MenuItem[] = [
     id: 'dashboard',
     label: '仪表盘',
     icon: LayoutDashboard,
-    path: '/'
+    path: '/admin'
   },
   {
     id: 'users',
     label: '用户管理',
     icon: Users,
-    path: '/users',
+    path: '/admin/users',
     children: [
-      { id: 'user-list', label: '用户列表', icon: User, path: '/users' },
-      { id: 'user-roles', label: '角色管理', icon: Settings, path: '/users/roles' }
+      { id: 'user-list', label: '用户列表', icon: User, path: '/admin/users' },
+      { id: 'user-roles', label: '角色管理', icon: Settings, path: '/admin/users/roles' }
     ]
   },
   {
     id: 'content',
     label: '内容管理',
     icon: FileText,
-    path: '/content',
+    path: '/admin/content',
     children: [
-      { id: 'articles', label: '文章管理', icon: FileText, path: '/content/articles' },
-      { id: 'categories', label: '分类管理', icon: Package, path: '/content/categories' }
+      { id: 'articles', label: '文章管理', icon: FileText, path: '/admin/content/articles' },
+      { id: 'categories', label: '分类管理', icon: Package, path: '/admin/content/categories' }
     ]
   },
   {
     id: 'analytics',
     label: '数据分析',
     icon: BarChart3,
-    path: '/analytics'
+    path: '/admin/analytics'
   },
   {
     id: 'system',
     label: '系统设置',
     icon: Settings,
-    path: '/system',
+    path: '/admin/system',
     children: [
-      { id: 'system-config', label: '系统配置', icon: Settings, path: '/system/config' },
-      { id: 'notifications', label: '通知管理', icon: Bell, path: '/system/notifications' },
-      { id: 'messages', label: '消息管理', icon: Mail, path: '/system/messages' }
+      { id: 'system-config', label: '系统配置', icon: Settings, path: '/admin/system/config' },
+      { id: 'notifications', label: '通知管理', icon: Bell, path: '/admin/system/notifications' },
+      { id: 'messages', label: '消息管理', icon: Mail, path: '/admin/system/messages' }
     ]
   }
 ]
@@ -136,51 +136,21 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* 菜单项 */}
       <nav className="flex-1 p-4 space-y-2">
         {menuItems.map((item) => (
-          <div key={item.id}>
-            <Button
-              variant={isActive(item.path) ? "secondary" : "ghost"}
-              className={cn(
-                "w-full justify-start h-10",
-                collapsed ? "px-2" : "px-3",
-                isActive(item.path) && "bg-secondary text-secondary-foreground"
-              )}
-              onClick={() => handleMenuClick(item)}
-            >
-              <item.icon className={cn("h-4 w-4", !collapsed && "mr-3")} />
-              {!collapsed && (
-                <span className="flex-1 text-left">{item.label}</span>
-              )}
-              {!collapsed && item.children && (
-                <ChevronRight 
-                  className={cn(
-                    "h-4 w-4 transition-transform",
-                    isExpanded(item.id) && "rotate-90"
-                  )} 
-                />
-              )}
-            </Button>
-
-            {/* 子菜单 */}
-            {!collapsed && item.children && isExpanded(item.id) && (
-              <div className="ml-6 mt-2 space-y-1">
-                {item.children.map((child) => (
-                  <Button
-                    key={child.id}
-                    variant={isActive(child.path) ? "secondary" : "ghost"}
-                    size="sm"
-                    className={cn(
-                      "w-full justify-start h-8 text-sm",
-                      isActive(child.path) && "bg-secondary text-secondary-foreground"
-                    )}
-                    onClick={() => navigate({ to: child.path })}
-                  >
-                    <child.icon className="h-3 w-3 mr-2" />
-                    {child.label}
-                  </Button>
-                ))}
-              </div>
+          <Button
+            key={item.id}
+            variant={isActive(item.path) ? "secondary" : "ghost"}
+            className={cn(
+              "w-full justify-start h-10",
+              collapsed ? "px-2" : "px-3",
+              isActive(item.path) && "bg-secondary text-secondary-foreground"
             )}
-          </div>
+            onClick={() => handleMenuClick(item)}
+          >
+            <item.icon className={cn("h-4 w-4", !collapsed && "mr-3")} />
+            {!collapsed && (
+              <span className="flex-1 text-left">{item.label}</span>
+            )}
+          </Button>
         ))}
       </nav>
 

@@ -62,7 +62,7 @@ export const useLogin = () => {
       setUserInfo(data.userInfo)
       
       // 登录成功后重定向到首页
-      navigate({ to: '/' })
+      navigate({ to: '/admin' })
     },
     onError: (error) => {
       console.error('登录失败:', error)
