@@ -1,47 +1,36 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useAuthStore } from '@/stores/auth'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Breadcrumb } from '@/components/Layout/Breadcrumb'
+import { Header } from '@/components/Layout/Header'
+import { Sidebar } from '@/components/Layout/Sidebar'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/')({
-  component: RouteComponent,
+  component: IndexLayout,
 })
 
-function RouteComponent() {
-  const { userInfo, logout } = useAuthStore()
-
-  const handleLogout = () => {
-    logout()
-  }
+function IndexLayout(){
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <Card className="shadow-xl border-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">欢迎回来！</CardTitle>
-            <CardDescription>
-              您已成功登录系统
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="text-center space-y-2">
-              <p className="text-sm text-muted-foreground">用户名：</p>
-              <p className="font-medium">{userInfo?.username}</p>
-              <p className="text-sm text-muted-foreground">昵称：</p>
-              <p className="font-medium">{userInfo?.nickname}</p>
-              <p className="text-sm text-muted-foreground">角色：</p>
-              <p className="font-medium">{userInfo?.roles?.join(', ')}</p>
-            </div>
-            <Button 
-              onClick={handleLogout}
-              variant="outline"
-              className="w-full"
-            >
-              退出登录
-            </Button>
-          </CardContent>
-        </Card>
+    <div className="flex h-screen bg-background">
+      {/* 左侧边栏 */}
+      <Sidebar 
+        collapsed={sidebarCollapsed} 
+        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} 
+      />
+      
+      {/* 主内容区域 */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* 顶部导航栏 */}
+        <Header onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)} />
+        
+        {/* 面包屑导航 */}
+        <Breadcrumb />
+        
+        {/* 主内容区域 */}
+        <main className="flex-1 overflow-auto p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   )
