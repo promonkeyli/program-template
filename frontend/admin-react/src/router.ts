@@ -13,7 +13,6 @@ import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminUsersIndexRouteImport } from './routes/admin/users/index'
 import { Route as AdminSystemIndexRouteImport } from './routes/admin/system/index'
-import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboard/index'
 import { Route as AdminContentIndexRouteImport } from './routes/admin/content/index'
 import { Route as AdminAnalyticsIndexRouteImport } from './routes/admin/analytics/index'
 
@@ -37,11 +36,6 @@ const AdminSystemIndexRoute = AdminSystemIndexRouteImport.update({
   path: '/admin/system/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
-  id: '/admin/dashboard/',
-  path: '/admin/dashboard/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminContentIndexRoute = AdminContentIndexRouteImport.update({
   id: '/admin/content/',
   path: '/admin/content/',
@@ -58,7 +52,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginIndexRoute
   '/admin/analytics': typeof AdminAnalyticsIndexRoute
   '/admin/content': typeof AdminContentIndexRoute
-  '/admin/dashboard': typeof AdminDashboardIndexRoute
   '/admin/system': typeof AdminSystemIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
@@ -67,7 +60,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginIndexRoute
   '/admin/analytics': typeof AdminAnalyticsIndexRoute
   '/admin/content': typeof AdminContentIndexRoute
-  '/admin/dashboard': typeof AdminDashboardIndexRoute
   '/admin/system': typeof AdminSystemIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
 }
@@ -77,7 +69,6 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/admin/analytics/': typeof AdminAnalyticsIndexRoute
   '/admin/content/': typeof AdminContentIndexRoute
-  '/admin/dashboard/': typeof AdminDashboardIndexRoute
   '/admin/system/': typeof AdminSystemIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
 }
@@ -88,7 +79,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/admin/analytics'
     | '/admin/content'
-    | '/admin/dashboard'
     | '/admin/system'
     | '/admin/users'
   fileRoutesByTo: FileRoutesByTo
@@ -97,7 +87,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/admin/analytics'
     | '/admin/content'
-    | '/admin/dashboard'
     | '/admin/system'
     | '/admin/users'
   id:
@@ -106,7 +95,6 @@ export interface FileRouteTypes {
     | '/login/'
     | '/admin/analytics/'
     | '/admin/content/'
-    | '/admin/dashboard/'
     | '/admin/system/'
     | '/admin/users/'
   fileRoutesById: FileRoutesById
@@ -116,7 +104,6 @@ export interface RootRouteChildren {
   LoginIndexRoute: typeof LoginIndexRoute
   AdminAnalyticsIndexRoute: typeof AdminAnalyticsIndexRoute
   AdminContentIndexRoute: typeof AdminContentIndexRoute
-  AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
   AdminSystemIndexRoute: typeof AdminSystemIndexRoute
   AdminUsersIndexRoute: typeof AdminUsersIndexRoute
 }
@@ -151,13 +138,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSystemIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/dashboard/': {
-      id: '/admin/dashboard/'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AdminDashboardIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/content/': {
       id: '/admin/content/'
       path: '/admin/content'
@@ -180,7 +160,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginIndexRoute: LoginIndexRoute,
   AdminAnalyticsIndexRoute: AdminAnalyticsIndexRoute,
   AdminContentIndexRoute: AdminContentIndexRoute,
-  AdminDashboardIndexRoute: AdminDashboardIndexRoute,
   AdminSystemIndexRoute: AdminSystemIndexRoute,
   AdminUsersIndexRoute: AdminUsersIndexRoute,
 }
