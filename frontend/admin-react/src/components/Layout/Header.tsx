@@ -12,6 +12,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAuthStore } from '@/stores/auth'
 import { useNavigate } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { LanguageToggle } from '@/components/LanguageToggle'
+import { FullscreenToggle } from '@/components/FullscreenToggle'
 
 interface HeaderProps {
   onToggleSidebar: () => void
@@ -20,6 +24,7 @@ interface HeaderProps {
 export function Header({ onToggleSidebar }: HeaderProps) {
   const { userInfo, logout } = useAuthStore()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const handleLogout = () => {
     logout()
@@ -51,14 +56,23 @@ export function Header({ onToggleSidebar }: HeaderProps) {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
-            placeholder="搜索..."
+            placeholder={t('common.search')}
             className="pl-10 w-64 h-8"
           />
         </div>
       </div>
 
-      {/* 右侧：通知和用户信息 */}
-      <div className="flex items-center space-x-4">
+      {/* 右侧：功能按钮和用户信息 */}
+      <div className="flex items-center space-x-2">
+        {/* 全屏按钮 */}
+        <FullscreenToggle />
+        
+        {/* 主题切换 */}
+        <ThemeToggle />
+        
+        {/* 语言切换 */}
+        <LanguageToggle />
+        
         {/* 通知按钮 */}
         <Button variant="ghost" size="sm" className="h-8 w-8 p-0 relative">
           <Bell className="h-4 w-4" />
@@ -93,16 +107,16 @@ export function Header({ onToggleSidebar }: HeaderProps) {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>个人资料</span>
+              <span>{t('common.profile')}</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>设置</span>
+              <span>{t('common.settings')}</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-red-600">
               <LogOut className="mr-2 h-4 w-4" />
-              <span>退出登录</span>
+              <span>{t('common.logout')}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
