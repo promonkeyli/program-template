@@ -5,7 +5,7 @@ import (
 	"web_backend.com/m/v2/internal/app/models"
 	"web_backend.com/m/v2/internal/app/repositories"
 	"web_backend.com/m/v2/internal/pkg/network"
-	"web_backend.com/m/v2/tools"
+	"web_backend.com/m/v2/pkg/utils"
 )
 
 // 登录授权业务逻辑
@@ -17,7 +17,7 @@ func LoginService(c *gin.Context, userData models.User) {
 		p := userData.Password
 		if p == user.Password {
 			// 签发token
-			token, e := tools.GenerateToken(p)
+			token, e := utils.GenerateToken(p)
 			if e != nil {
 				network.HandleError(c, network.StatusInternalServerError, "Token Error")
 			} else {

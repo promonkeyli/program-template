@@ -5,7 +5,7 @@ import (
 	"web_backend.com/m/v2/internal/app/models"
 	"web_backend.com/m/v2/internal/app/services"
 	"web_backend.com/m/v2/internal/pkg/network"
-	"web_backend.com/m/v2/tools"
+	"web_backend.com/m/v2/pkg/utils"
 )
 
 type AuthController struct {
@@ -23,7 +23,7 @@ type AuthController struct {
 func (T AuthController) AuthLoginController(c *gin.Context) {
 	// 请求参数判断
 	var bodyUser models.User
-	tools.LogInfo("AuthLoginController called")
+	utils.LogInfo("AuthLoginController called")
 	if err := c.BindJSON(&bodyUser); err != nil {
 		network.HandleError(c, network.StatusBadRequest, err.Error())
 		return

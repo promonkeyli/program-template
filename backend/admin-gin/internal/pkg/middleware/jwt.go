@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"web_backend.com/m/v2/tools"
+	"web_backend.com/m/v2/pkg/utils"
 )
 
 func JWT() gin.HandlerFunc {
@@ -24,7 +24,7 @@ func JWT() gin.HandlerFunc {
 		tokenString = tokenString[7:]
 
 		// Parse the token and get the claims
-		claims, err := tools.ParseToken(tokenString)
+		claims, err := utils.ParseToken(tokenString)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
 			c.Abort()
