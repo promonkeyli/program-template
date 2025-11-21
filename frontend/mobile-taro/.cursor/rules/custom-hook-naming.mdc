@@ -1,0 +1,22 @@
+---
+name: "Custom Hook Naming"
+description: "All custom hooks must start with 'use' to adhere to React's conventions and ensure proper linting and understanding."
+scope: ["file_creation", "file_modification"]
+---
+## Custom Hook Naming
+
+This rule enforces that all custom React Hooks must follow the standard naming convention by starting with the prefix `use`. This convention is crucial for React's linting rules to correctly identify Hooks and apply the "Rules of Hooks," which helps prevent common bugs. Adhering to this naming pattern also improves code readability and makes it immediately clear that a function is a Hook.
+
+### Patterns:
+
+```json
+[
+  {
+    "path": "src/**/*.ts",
+    "regex": "export\\s+(const|function)\\s+(?!use[A-Z])",
+    "message": "Custom hooks must start with 'use' (e.g., `useMyHook`)."
+  }
+]
+```
+
+```

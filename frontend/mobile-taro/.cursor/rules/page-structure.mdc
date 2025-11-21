@@ -1,0 +1,48 @@
+---
+name: "Page Structure"
+description: "Pages should contain `index.tsx`, `index.less`, `index.config.ts`, and optionally local components in a `components` subfolder, and custom hooks directly in the page folder."
+scope: ["file_creation", "file_modification"]
+---
+## Page Structure
+
+This rule outlines the expected file and folder structure for each page in the application. A page's folder should serve as a self-contained unit for that page's functionality.
+
+-   `index.tsx`: The main entry point for the page, acting as a container component.
+-   `index.less`: Page-specific styles.
+-   `index.config.ts`: Page-specific configuration (e.g., navigation bar title).
+-   `components/`: An optional subfolder for components that are used exclusively within this page. These local components should also follow a folder-per-component structure.
+-   `use*.ts`: Custom hooks that encapsulate the page's business logic, placed directly within the page's root folder.
+
+This structure promotes modularity, making pages easier to understand, develop, and maintain.
+
+### Patterns:
+
+```json
+[
+  {
+    "path": "src/pages/*/index.tsx",
+    "type": "file",
+    "message": "Each page must have an `index.tsx` as its entry point."
+  },
+  {
+    "path": "src/pages/*/index.less",
+    "type": "file",
+    "message": "Each page must have an `index.less` for its styles."
+  },
+  {
+    "path": "src/pages/*/index.config.ts",
+    "type": "file",
+    "message": "Each page must have an `index.config.ts` for its configuration."
+  },
+  {
+    "path": "src/pages/*/components/*",
+    "type": "directory",
+    "message": "Local components for a page should be in a `components` subfolder (e.g., `src/pages/MyPage/components/MyLocalComponent/`)."
+  },
+  {
+    "path": "src/pages/*/use*.ts",
+    "type": "file",
+    "message": "Custom hooks for a page should be placed directly in the page's folder (e.g., `src/pages/MyPage/useMyPageData.ts`)."
+  }
+]
+```

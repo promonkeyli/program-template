@@ -1,0 +1,30 @@
+---
+name: "Service Module Structure"
+description: "Each service module folder must contain an `index.ts` for API functions and a `type.ts` for related TypeScript types."
+scope: ["file_creation", "file_modification"]
+---
+## Service Module Structure
+
+This rule dictates the internal structure of service modules. To maintain a clear separation of concerns, each service module folder must contain two primary files:
+
+1.  `index.ts`: This file is dedicated to implementing the actual API request functions.
+2.  `type.ts`: This file is used for defining all TypeScript interfaces and types that are relevant to the service module's requests and responses.
+
+This separation improves readability and makes it easier to manage type definitions independently from the API implementation logic.
+
+### Patterns:
+
+```json
+[
+  {
+    "path": "src/services/*/index.ts",
+    "type": "file",
+    "message": "Service modules must have an `index.ts` for API functions."
+  },
+  {
+    "path": "src/services/*/type.ts",
+    "type": "file",
+    "message": "Service modules must have a `type.ts` for related TypeScript types."
+  }
+]
+```

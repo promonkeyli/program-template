@@ -1,0 +1,51 @@
+---
+name: "Styling Conventions"
+description: "Enforces the use of global Less variables for colors and font sizes, and disallows hard-coded values."
+scope: ["file_modification"]
+globs: ["src/**/*.less"]
+---
+## Styling Conventions
+
+To maintain visual consistency and improve maintainability, this project enforces a strict styling convention. All colors, background colors, and font sizes must be defined and used via global Less variables.
+
+-   **Source of Truth**: All variables are defined in `src/app.less`.
+-   **Usage**: These variables are globally available in all `.less` files without needing an explicit import.
+
+### Prohibited Patterns
+
+-   **Hard-coded Colors**: Do not use hexadecimal, `rgb()`, `rgba()`, or `hsl()` values directly in your styles.
+-   **Pixel-based Font Sizes**: Do not use `px` units for `font-size`. Use the provided `@font-size-*` variables.
+
+### Patterns:
+
+```json
+[
+  {
+    "path": "src/**/*.less",
+    "regex": "color:\s*#[0-9a-fA-F]{3,6}",
+    "message": "Do not use hard-coded hex values for colors. Use a variable from `src/app.less` instead (e.g., `color: @text-color-base;`)."
+  },
+  {
+    "path": "src/**/*.less",
+    "regex": "background-color:\s*#[0-9a-fA-F]{3,6}",
+    "message": "Do not use hard-coded hex values for background colors. Use a variable from `src/app.less` instead (e.g., `background-color: @bg-color-base;`)."
+  },
+  {
+    "path": "src/**/*.less",
+    "regex": "color:\s*rgb",
+    "message": "Do not use hard-coded rgb() values for colors. Use a variable from `src/app.less` instead."
+  },
+  {
+    "path": "src/**/*.less",
+    "regex": "background-color:\s*rgb",
+    "message": "Do not use hard-coded rgb() values for background colors. Use a variable from `src/app.less` instead."
+  },
+  {
+    "path": "src/**/*.less",
+    "regex": "font-size:\s*[0-9]+px",
+    "message": "Do not use hard-coded pixel values for font sizes. Use a variable from `src/app.less` instead (e.g., `font-size: @font-size-base;`)."
+  }
+]
+```
+
+```
