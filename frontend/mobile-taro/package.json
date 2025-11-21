@@ -2,7 +2,7 @@
   "name": "mobile-taro",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "基于 Taro 的移动端商城",
   "templateInfo": {
     "name": "default",
     "typescript": true,
@@ -56,7 +56,8 @@
     "@tarojs/taro": "4.1.8",
     "axios": "^1.13.2",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

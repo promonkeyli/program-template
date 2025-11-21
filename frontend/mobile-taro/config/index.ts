@@ -1,5 +1,4 @@
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
-import path from 'path'
 
 import devConfig from './dev'
 import prodConfig from './prod'
@@ -31,23 +30,7 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
       }
     },
     framework: 'react',
-    compiler: {
-      type: 'vite',
-      prebundle: { enable: false },
-      // vite: {
-      //   css: {
-      //     preprocessorOptions: {
-      //       less: {
-      //         additionalData: `@import "~@/app.less";`,
-      //         javascriptEnabled: true,
-      //       }
-      //     }
-      //   }
-      // }
-    },
-    alias: {
-      '@': path.resolve(__dirname, '..', 'src'),
-    },
+    compiler: 'vite',
     mini: {
       postcss: {
         pxtransform: {

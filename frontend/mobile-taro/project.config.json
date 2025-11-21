@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "./dist",
   "projectname": "mobile-taro",
-  "description": "",
+  "description": "基于 Taro 的移动端商城",
   "appid": "wxf4ad0948f0ccfb81",
   "setting": {
     "urlCheck": true,
