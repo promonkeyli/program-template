@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "mobile-taro",
   "description": "基于 Taro v4 的移动端项目模版",
-  "appid": "wxf4ad0948f0ccfb81",
+  "appid": "touristappid",
   "setting": {
     "urlCheck": true,
     "es6": false,

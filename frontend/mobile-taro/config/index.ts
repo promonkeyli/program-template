@@ -1,15 +1,21 @@
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
-import { UnifiedWebpackPluginV5 } from 'weapp-tailwindcss/webpack'
+
+import { UnifiedViteWeappTailwindcssPlugin } from 'weapp-tailwindcss/vite'
+// @ts-ignore
+import tailwindcss from '@tailwindcss/postcss'
+import path from 'node:path'
+
 import devConfig from './dev'
 import prodConfig from './prod'
 
+const srcPath = path.resolve(__dirname, '../src')
+
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 // @ts-ignore
-export default defineConfig<'webpack5'>(async (merge, { command, mode }) => {
-  const baseConfig: UserConfigExport<'webpack5'> = {
+export default defineConfig<'vite'>(async (merge, { command, mode }) => {
+  const baseConfig: UserConfigExport<'vite'> = {
     projectName: 'mobile-taro',
-    date: '2025-11-24',
+    date: '2025-11-25',
     designWidth: 750,
     deviceRatio: {
       640: 2.34 / 2,
@@ -20,8 +26,7 @@ export default defineConfig<'webpack5'>(async (merge, { command, mode }) => {
     sourceRoot: 'src',
     outputRoot: 'dist',
     plugins: [
-      "@tarojs/plugin-generator",
-      '@tarojs/plugin-http',
+      "@tarojs/plugin-generator"
     ],
     defineConstants: {
     },
@@ -32,9 +37,29 @@ export default defineConfig<'webpack5'>(async (merge, { command, mode }) => {
       }
     },
     framework: 'react',
-    compiler: 'webpack5',
-    cache: {
-      enable: false // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+    alias: {
+        '@': srcPath,
+    },
+    compiler: {
+      type: 'vite',
+      vitePlugins: [
+        {
+          name: 'postcss-config-loader-plugin',
+          config(config) {
+            // 加载 tailwindcss
+            if (typeof config.css?.postcss === 'object') {
+              config.css?.postcss.plugins?.unshift(tailwindcss())
+            }
+          },
+        },
+        UnifiedViteWeappTailwindcssPlugin({
+          rem2rpx: true,
+          cssEntries: [
+            // 你 @import "weapp-tailwindcss"; 那个文件绝对路径
+            path.resolve(__dirname, '../src/app.css'),
+          ],
+        }),
+      ],
     },
     mini: {
       postcss: {
@@ -52,28 +77,11 @@ export default defineConfig<'webpack5'>(async (merge, { command, mode }) => {
           }
         }
       },
-      webpackChain(chain) {
-        chain.resolve.plugin('tsconfig-paths').use(TsconfigPathsPlugin)
-        chain.merge({
-          plugin: {
-            install: {
-              plugin: UnifiedWebpackPluginV5,
-              args: [{
-                // 这里可以传参数
-                rem2rpx: true,
-              }]
-            }
-          }
-        })
-      }
     },
     h5: {
       publicPath: '/',
       staticDirectory: 'static',
-      output: {
-        filename: 'js/[name].[hash:8].js',
-        chunkFilename: 'js/[name].[chunkhash:8].js'
-      },
+
       miniCssExtractPluginOption: {
         ignoreOrder: true,
         filename: 'css/[name].[hash].css',
@@ -92,9 +100,6 @@ export default defineConfig<'webpack5'>(async (merge, { command, mode }) => {
           }
         }
       },
-      webpackChain(chain) {
-        chain.resolve.plugin('tsconfig-paths').use(TsconfigPathsPlugin)
-      }
     },
     rn: {
       appName: 'taroDemo',
