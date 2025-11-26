@@ -26,4 +26,5 @@ declare namespace NodeJS {
   }
 }
 
-
+// 全局常量声明 (通过 defineConstants 注入)
+declare const TARO_APP_BASE_URL: string;

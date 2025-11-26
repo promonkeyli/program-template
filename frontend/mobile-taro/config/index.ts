@@ -26,9 +26,10 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
     sourceRoot: 'src',
     outputRoot: 'dist',
     plugins: [
-      "@tarojs/plugin-generator"
+      "@tarojs/plugin-generator",
     ],
     defineConstants: {
+      'process.env.TARO_APP_BASE_URL': JSON.stringify(process.env.TARO_APP_BASE_URL || ''),
     },
     copy: {
       patterns: [
@@ -38,7 +39,7 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
     },
     framework: 'react',
     alias: {
-        '@': srcPath,
+      '@': srcPath,
     },
     compiler: {
       type: 'vite',

@@ -20,6 +20,9 @@ importers:
       '@tarojs/plugin-framework-react':
         specifier: 4.1.8
         version: 4.1.8(@tarojs/helper@4.1.8)(@tarojs/runtime@4.1.8)(@tarojs/shared@4.1.8)(@vitejs/plugin-react@4.7.0(vite@4.5.14(@types/node@24.10.1)(lightningcss@1.30.2)(sass@1.94.2)(terser@5.44.1)))(react@18.3.1)(vite@4.5.14(@types/node@24.10.1)(lightningcss@1.30.2)(sass@1.94.2)(terser@5.44.1))
+      '@tarojs/plugin-http':
+        specifier: ^4.1.8
+        version: 4.1.8(@tarojs/runtime@4.1.8)(@tarojs/shared@4.1.8)(@tarojs/taro@4.1.8(@tarojs/components@4.1.8(@tarojs/helper@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5))(@tarojs/helper@4.1.8)(@tarojs/shared@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5))
       '@tarojs/plugin-platform-alipay':
         specifier: 4.1.8
         version: 4.1.8(@tarojs/service@4.1.8)(@tarojs/shared@4.1.8)
@@ -56,6 +59,9 @@ importers:
       '@tarojs/taro':
         specifier: 4.1.8
         version: 4.1.8(@tarojs/components@4.1.8(@tarojs/helper@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5))(@tarojs/helper@4.1.8)(@tarojs/shared@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5)
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.2
       react:
         specifier: ^18.0.0
         version: 18.3.1
@@ -2138,6 +2144,14 @@ packages:
 
   '@tarojs/plugin-generator@4.1.8':
     resolution: {integrity: sha512-uezvXoQxmlVFF98D1ousbcYhSelUnGl2zZW3U1JG7u0kXu0OfreENlXY13/yVy7lfY5afWWaSERhaxoKVw+xhw==}
+
+  '@tarojs/plugin-http@4.1.8':
+    resolution: {integrity: sha512-q8vf4sCfFviCKpGgWcBUe6ckYAMYtP0gacVbM/UKfZhhxs+Y77BLgM5UTXAZZM28rJf6LWlOfrU8qBbF6c1cVQ==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@tarojs/runtime': 4.1.8
+      '@tarojs/shared': 4.1.8
+      '@tarojs/taro': 4.1.8
 
   '@tarojs/plugin-platform-alipay@4.1.8':
     resolution: {integrity: sha512-t+BRVgFnZ+bOYhnzAwlkuPNPEhbt3NT6vRz8YCE1/yY1f0319rEOBu4GZST4UthvT7rdY9YekWSDrGPaUti+1Q==}
@@ -7897,6 +7911,12 @@ snapshots:
       - '@types/node'
       - babel-plugin-macros
       - supports-color
+
+  '@tarojs/plugin-http@4.1.8(@tarojs/runtime@4.1.8)(@tarojs/shared@4.1.8)(@tarojs/taro@4.1.8(@tarojs/components@4.1.8(@tarojs/helper@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5))(@tarojs/helper@4.1.8)(@tarojs/shared@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5))':
+    dependencies:
+      '@tarojs/runtime': 4.1.8
+      '@tarojs/shared': 4.1.8
+      '@tarojs/taro': 4.1.8(@tarojs/components@4.1.8(@tarojs/helper@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5))(@tarojs/helper@4.1.8)(@tarojs/shared@4.1.8)(@types/react@18.3.27)(postcss@8.5.6)(rollup@3.29.5)
 
   '@tarojs/plugin-platform-alipay@4.1.8(@tarojs/service@4.1.8)(@tarojs/shared@4.1.8)':
     dependencies:

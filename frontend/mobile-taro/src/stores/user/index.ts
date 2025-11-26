@@ -7,10 +7,10 @@ const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       userInfo: null,
-      token: null,
+      tokenInfo: null,
       setUserInfo: (userInfo) => set({ userInfo }),
-      setToken: (token) => set({ token }),
-      clearUser: () => set({ userInfo: null, token: null }),
+      setTokenInfo: (tokenInfo) => set({ tokenInfo }),
+      clearUser: () => set({ userInfo: null, tokenInfo: null }),
     }),
     {
       name: 'user-store', // 在本地存储中使用的键名

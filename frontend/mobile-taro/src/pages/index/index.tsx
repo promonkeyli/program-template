@@ -1,15 +1,23 @@
 import { View, Text } from '@tarojs/components'
-import { useLoad } from '@tarojs/taro'
 import './index.css'
-import useUserStore from "@/stores/user";
+import { login } from '@/services/user';
+import { useEffect } from "react";
 
-export default function Index () {
-  useLoad(() => {
-    useUserStore.getState().setUserInfo({
-      name: "Young",
-      avatar: "/avatar"
+export default function Index() {
+
+  useEffect(() => {
+    console.log('开始调用登录接口...');
+    login({
+      username: "admin",
+      password: "123456"
     })
-  })
+      .then(res => {
+        console.log('登录成功:', res);
+      })
+      .catch(err => {
+        console.error('登录失败:', err);
+      });
+  }, []);
 
   return (
     <View>
