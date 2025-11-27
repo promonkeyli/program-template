@@ -1,7 +1,6 @@
 import Taro from '@tarojs/taro';
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import taroAdapter from './adapter';
-import { ResponseData } from './type';
 import useUserStore from '@/stores/user';
 import { TokenInfo } from '@/stores/user/type';
 
@@ -47,12 +46,12 @@ instance.interceptors.request.use(
 
 // 响应拦截器
 instance.interceptors.response.use(
-  (response: AxiosResponse<ResponseData>) => {
+  (response) => {
     const { code, message } = response.data;
 
     // 假设 200 为成功，根据实际情况调整
     if (code === 200) {
-      return response.data.data
+      return response.data
     }
 
     // 处理业务错误

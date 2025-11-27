@@ -8,7 +8,7 @@
 - **框架**: [Taro](https://taro.zone/)
 - **UI 框架**: [React](https://react.dev/)
 - **语言**: [TypeScript](https://www.typescriptlang.org/)
-- **样式**: [Less](https://lesscss.org/)
+- **样式**: [Tailwind CSS](https://tailwindcss.com/) (v4)
 - **状态管理**: [Zustand](https://github.com/pmndrs/zustand)
 - **包管理器**: [pnpm](https://pnpm.io/)
 - **代码规范**: ESLint, Stylelint, Commitlint
@@ -70,10 +70,10 @@
     - `components/`: **此页面独有的** 局部组件
       - `my-local-component/`: 局部组件文件夹
         - `index.tsx`
-        - `index.less`
+        - `index.less` (可选，仅当 Tailwind 无法满足时使用)
     - `useMyPageData.ts`: 此页面的自定义 Hooks (与 `index.tsx` 同级)
     - `index.tsx`: 页面入口（容器组件），负责组织 Hooks 和组件
-    - `index.less`: 页面级样式
+    - `index.less`: 页面级样式 (可选)
     - `index.config.ts`: 页面配置
 - **职责 (`index.tsx`)**:
   1.  调用一个或多个自定义 Hooks 来获取数据和操作方法。
@@ -109,13 +109,12 @@
 
 ### 5. 样式规范 (Styling)
 
-为了保持视觉一致性和可维护性，样式必须遵循以下规则：
+为了保持视觉一致性和开发效率，样式开发遵循以下规则：
 
-- **使用变量**: **必须** 使用 `src/app.less` 中定义的全局 Less 变量来设置颜色、字体大小和背景色。
-- **禁止硬编码**:
-  - **严禁** 在 `.less` 文件中硬编码任何颜色值（例如 `#fff`, `rgb(0,0,0)`）。
-  - **严禁** 使用像素单位 (`px`) 定义字体大小，应使用 `@font-size-*` 变量。
-- **自动导入**: `src/app.less` 已被配置为全局自动导入，在任何 `.less` 文件中都可以直接使用其中定义的变量。
+- **优先使用 Tailwind**: **必须** 优先使用 Tailwind CSS 的工具类（Utility Classes）来编写样式。
+- **避免手写 CSS**: 除非遇到 Tailwind 无法满足的复杂动画或特定样式覆盖，否则 **严禁** 手写 CSS/Less。
+- **全局样式**: 全局样式定义在 `src/assets/styles/index.css` 中。
+- **小程序兼容性**: 使用 `weapp-tailwindcss` 进行编译，请注意避免使用小程序不支持的选择器。
 
 ---
 
@@ -125,7 +124,7 @@
 
 1.  **创建页面结构**:
     - 在 `src/pages` 下创建页面文件夹，例如 `user-profile`。
-    - 在 `user-profile` 内创建 `index.tsx`, `index.less`, `index.config.ts`。
+    - 在 `user-profile` 内创建 `index.tsx`, `index.config.ts`。
     - 创建 `components` 子文件夹。
 2.  **创建自定义 Hook**:
     - 在 `user-profile` 文件夹下创建 `useUserProfileData.ts` (与 `index.tsx` 同级)，在其中编写获取用户数据的逻辑。

@@ -1,0 +1,60 @@
+# Antigravity Project Rules
+
+You are an expert Frontend Developer specializing in **Taro**, **React**, **TypeScript**, and **Tailwind CSS**.
+
+## 🚀 Tech Stack
+- **Framework**: [Taro v4](https://taro.zone/) (React)
+- **Language**: TypeScript
+- **Styling**: **Tailwind CSS v4** (via `weapp-tailwindcss`)
+  - *Note*: `GEMINI.md` mentions Less, but the project is configured for Tailwind. **Prioritize Tailwind utility classes.**
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Build Tool**: Vite (via Taro)
+- **Package Manager**: pnpm
+
+## 📂 Project Structure (Folder-as-Module)
+Follow the "Folder-as-Module" pattern. Every logical unit should be a folder.
+
+- **`src/pages/`**: Page modules.
+  - Structure: `src/pages/[page-name]/`
+    - `index.tsx`: Container component (UI layout only).
+    - `use[PageName].ts`: Custom Hook for logic/state (REQUIRED).
+    - `components/`: Local components specific to this page.
+    - `index.config.ts`: Page configuration.
+- **`src/components/`**: Global reusable components.
+- **`src/services/`**: API services, organized by domain (e.g., `src/services/order/`).
+- **`src/stores/`**: Global state (Zustand), organized by domain.
+- **`src/utils/`**: Shared utilities.
+- **`src/assets/`**: Static assets and global styles (`src/assets/styles/index.css`).
+
+## 📝 Coding Conventions
+
+### 1. Logic & UI Separation
+- **Strictly separate logic from UI.**
+- **Pages (`index.tsx`)**: Should only contain JSX layout and calls to custom hooks.
+- **Hooks (`use...ts`)**: Contain all `useState`, `useEffect`, API calls, and business logic.
+- **Components**: Should be functional and dumb (presentational) where possible.
+
+### 2. Styling
+- **Use Tailwind CSS** for styling.
+- Avoid writing raw CSS/Less unless necessary for complex animations or legacy overrides.
+- Global styles are in `src/assets/styles/index.css`.
+
+### 3. State Management
+- Use **Zustand** for global state.
+- Create separate stores for different domains (e.g., `useUserStore`, `useSystemStore`).
+
+### 4. API Requests
+- Use the encapsulated `http` utility (likely in `src/utils/http`).
+- Define types in `type.ts` within the service module.
+
+## 🛠️ Common Commands
+- **Install**: `pnpm install`
+- **Dev (WeChat)**: `pnpm dev:weapp`
+- **Dev (H5)**: `pnpm dev:h5`
+- **Build**: `pnpm build:weapp`
+- **Create Page**: `pnpm new` (Follow prompts)
+
+## ⚠️ Important Notes
+- **Environment**: The user is on macOS.
+- **Fixes**: If you encounter `process is not defined` in WeChat, ensure `defineConstants` in `config/index.ts` handles it or use `process.env.TARO_ENV`.
+- **Tailwind**: The project uses `weapp-tailwindcss`. Ensure classes are compatible with Mini Program limitations (e.g., avoid complex selectors if possible).

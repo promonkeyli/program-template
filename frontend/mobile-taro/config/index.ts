@@ -57,7 +57,7 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
           rem2rpx: true,
           cssEntries: [
             // 你 @import "weapp-tailwindcss"; 那个文件绝对路径
-            path.resolve(__dirname, '../src/app.css'),
+            path.resolve(__dirname, '../src/assets/styles/index.css'),
           ],
         }),
       ],
