@@ -1,0 +1,14 @@
+services:
+  redis:
+    image: redis:alpine3.22  # 使用 alpine 版本，镜像更小
+    container_name: redis
+    restart: always        # 容器退出或 docker 重启时自动启动
+    ports:
+      - "6379:6379"        # 宿主机端口:容器端口
+    command:
+      # 开启 AOF 持久化，设置密码为 123456
+      redis-server --appendonly yes --requirepass "your_password"
+    volumes:
+      - /data/redis/data:/data       # 数据挂载到当前目录下的 data 文件夹，防止数据丢失
+    sysctls:
+      - net.core.somaxconn=1024 # 可选：优化网络连接队列                                                                                                                            13,12         All
