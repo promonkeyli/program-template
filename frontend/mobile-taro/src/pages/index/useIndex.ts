@@ -4,8 +4,8 @@ import { login, logout } from '@/services/user';
 import useUserStore from '@/stores/user';
 
 export default function useIndex() {
-    const [username, setUsername] = useState('admin');
-    const [password, setPassword] = useState('123456');
+    const [username, setUsername] = useState('15984093508');
+    const [password, setPassword] = useState('ly15984093508');
     const [loading, setLoading] = useState(false);
 
     const { userInfo, setUserInfo, setTokenInfo, clearUser } = useUserStore();
@@ -18,7 +18,7 @@ export default function useIndex() {
 
         setLoading(true);
         try {
-            const res = await login({ username, password });
+            const res = await login({ phone: username, password });
             // 假设 res.data 包含 userInfo 和 tokenInfo
             // 这里根据实际接口返回结构进行调整，暂时模拟
             const mockTokenInfo = {

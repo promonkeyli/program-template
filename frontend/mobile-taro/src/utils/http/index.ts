@@ -4,12 +4,14 @@ import taroAdapter from './adapter';
 import useUserStore from '@/stores/user';
 import { TokenInfo } from '@/stores/user/type';
 
-// 请求白名单，不需要携带 token 的接口
-const WHITE_LIST = [
-  '/login',
-  '/register',
-  '/refreshToken',
-];
+declare module 'axios' {
+  export interface AxiosRequestConfig<D = any> {
+    isSkipAuth?: boolean;
+  }
+  export interface InternalAxiosRequestConfig<D = any> {
+    isSkipAuth?: boolean;
+  }
+}
 
 const instance = axios.create({
   baseURL: process.env.TARO_APP_BASE_URL || '', // 从编译时注入的常量获取 baseURL
@@ -28,12 +30,11 @@ let requests: ((token: string) => void)[] = [];
 // 请求拦截器
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // 检查是否在白名单中
-    const isWhiteList = WHITE_LIST.some((url) => config.url?.includes(url));
-
-    if (!isWhiteList) {
+    console.log('config', config);
+    if (!config.isSkipAuth) {
       const tokenInfo = useUserStore.getState().tokenInfo;
       if (tokenInfo?.accessToken) {
+        config.headers = config.headers || {};
         config.headers.Authorization = `Bearer ${tokenInfo.accessToken}`;
       }
     }
@@ -64,7 +65,7 @@ instance.interceptors.response.use(
     }
 
     // 处理 401 Token 过期
-    const config = response.config;
+    const config = response.config as InternalAxiosRequestConfig;
 
     if (!isRefreshing) {
       isRefreshing = true;
@@ -78,6 +79,7 @@ instance.interceptors.response.use(
       return refreshTokenFunc(refreshToken)
         .then((newTokenInfo) => {
           useUserStore.getState().setTokenInfo(newTokenInfo);
+          config.headers = config.headers || {};
           config.headers.Authorization = `Bearer ${newTokenInfo.accessToken}`;
 
           // 执行队列中的请求

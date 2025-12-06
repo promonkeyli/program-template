@@ -4,7 +4,7 @@ import { TokenInfo } from '@/stores/user/type';
  * 登录请求参数
  */
 export interface LoginParams {
-    username: string;
+    phone: string;
     password: string;
 }
 
